@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+:root {
+	--bg: 0 0 0;
+	--fg: 255 255 255;
+	--muted: 156 163 175;
+}
+
+html, body, #__next {
+	height: 100%;
+	overflow-x: hidden;
+}
+
+body {
+	background: rgb(var(--bg));
+	color: rgb(var(--fg));
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+	background: rgba(6, 182, 212, 0.3);
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(6, 182, 212, 0.5);
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+	transition: all 0.2s ease-in-out;
+}
+
+/* Focus styles */
+input:focus, button:focus, select:focus {
+	outline: none;
+}
+
+/* Glassmorphism utilities */
+.glass {
+	background: rgba(0, 0, 0, 0.4);
+	backdrop-filter: blur(16px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-light {
+	background: rgba(255, 255, 255, 0.05);
+	backdrop-filter: blur(16px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}
