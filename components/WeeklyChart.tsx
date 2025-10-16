@@ -100,41 +100,7 @@ export default function WeeklyChart({ arrivals }: WeeklyChartProps) {
     return chartData.some(day => day.count > 0);
   }, [chartData]);
 
-  if (!hasAnyArrivals) {
-    return (
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="bg-black/50 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-2xl p-6 relative overflow-hidden"
-      >
-        {/* Subtle background pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-50 to-purple-50"></div>
-        </div>
-        
-        {/* Content */}
-        <div className="relative z-10 text-center py-12">
-          <motion.div 
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full flex items-center justify-center border border-cyan-400/30"
-          >
-            <svg className="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </motion.div>
-          <h3 className="text-xl font-bold text-white mb-2">No Arrivals This Week</h3>
-          <p className="text-sm text-white/60 mb-4">
-            {weekRange.start} - {weekRange.end}
-          </p>
-          <p className="text-sm text-white/40">
-            Add arrivals to see your weekly activity pattern
-          </p>
-        </div>
-      </motion.div>
-    );
-  }
+  // Always render one tree; show empty state or the chart based on data availability
 
   const averageArrivalTime = useMemo(() => {
     const validTimes = chartData.filter(day => day.arrivalTime !== null);
@@ -204,7 +170,7 @@ export default function WeeklyChart({ arrivals }: WeeklyChartProps) {
         >
           <p className="font-semibold text-white text-sm">{data.day}</p>
           <p className="text-sm text-white/80 mt-1">
-            <span className="font-medium text-cyan-400">{formatTime(data.arrivalTime)}</span> arrival time
+            <span className="font-medium text-white/90">{formatTime(data.arrivalTime)}</span> arrival time
           </p>
           <p className="text-xs text-white/60 mt-1">{data.count} arrivals</p>
           <p className={`text-xs font-medium mt-1 ${getTagColor(data.timeTag)}`}>
@@ -253,7 +219,7 @@ export default function WeeklyChart({ arrivals }: WeeklyChartProps) {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-xl font-bold text-white flex items-center gap-2">
-            <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full animate-pulse"></div>
+            <div className="w-2 h-2 bg-white/70 rounded-full animate-pulse"></div>
             Weekly Activity
           </h3>
           <p className="text-sm text-white/60 mt-1">{weekRange.start} - {weekRange.end}</p>
@@ -264,16 +230,16 @@ export default function WeeklyChart({ arrivals }: WeeklyChartProps) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => navigateWeek('prev')}
-            className="p-3 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:text-white hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all duration-300"
+            className="p-3 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:text-white hover:border-white/20 hover:bg-white/10 transition-all duration-300"
           >
             <ChevronLeft className="w-5 h-5" />
           </motion.button>
           
-          <motion.button
+          <motion.button 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => navigateWeek('next')}
-            className="p-3 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:text-white hover:border-purple-400/50 hover:bg-purple-500/10 transition-all duration-300"
+            className="p-3 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:text-white hover:border-white/20 hover:bg-white/10 transition-all duration-300"
           >
             <ChevronRight className="w-5 h-5" />
           </motion.button>
@@ -290,9 +256,8 @@ export default function WeeklyChart({ arrivals }: WeeklyChartProps) {
           <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 10 }}>
             <defs>
               <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#06B6D4" stopOpacity={0.9} />
-                <stop offset="50%" stopColor="#3B82F6" stopOpacity={0.8} />
-                <stop offset="100%" stopColor="#8B5CF6" stopOpacity={0.7} />
+                <stop offset="0%" stopColor="#FFFFFF" stopOpacity={0.9} />
+                <stop offset="100%" stopColor="#FFFFFF" stopOpacity={0.5} />
               </linearGradient>
             </defs>
             
@@ -315,10 +280,10 @@ export default function WeeklyChart({ arrivals }: WeeklyChartProps) {
             {averageArrivalTime !== null && (
               <ReferenceLine 
                 y={averageArrivalTime} 
-                stroke="#06B6D4" 
+                stroke="#FFFFFF" 
                 strokeDasharray="8 8"
                 strokeWidth={2}
-                strokeOpacity={0.6}
+                strokeOpacity={0.35}
               />
             )}
             
@@ -337,9 +302,9 @@ export default function WeeklyChart({ arrivals }: WeeklyChartProps) {
         {averageArrivalTime !== null && (
           <div className="flex items-center justify-center mt-4">
             <div className="flex items-center space-x-3 text-xs text-white/60">
-              <div className="w-6 h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent"></div>
-              <span className="font-medium text-cyan-400">Average: {formatTime(averageArrivalTime)}</span>
-              <div className="w-6 h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent"></div>
+              <div className="w-6 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+              <span className="font-medium text-white/80">Average: {formatTime(averageArrivalTime)}</span>
+              <div className="w-6 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
             </div>
           </div>
         )}

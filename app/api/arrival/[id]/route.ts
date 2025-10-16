@@ -1,4 +1,5 @@
 import { arrivalsCollection } from '@/lib/db';
+import { bumpArrivalsCacheVersion } from '@/lib/cache';
 import { ObjectId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 import type { ArrivalTimeTag, DayOfWeek } from '@/lib/types';
@@ -52,6 +53,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 		}
 		
 		const updated = await col.findOne({ _id: new ObjectId(id) });
+		await bumpArrivalsCacheVersion();
 		return NextResponse.json({ success: true, arrival: updated });
 	} catch (e: any) {
 		return NextResponse.json({ success: false, error: e?.message || 'Server error' }, { status: 500 });
@@ -75,11 +77,13 @@ export async function DELETE(_req: NextRequest, { params }: { params: { id: stri
 		console.log('Delete result:', result);
 		
 		if (result.deletedCount === 0) {
-			console.log('No document found with id:', id);
-			return NextResponse.json({ success: false, error: 'Not found' }, { status: 404 });
+			console.log('No document found with id, treating as idempotent delete:', id);
+			await bumpArrivalsCacheVersion();
+			return NextResponse.json({ success: true, info: 'Already deleted or not found' }, { status: 200 });
 		}
 		
 		console.log('Successfully deleted document');
+		await bumpArrivalsCacheVersion();
 		return NextResponse.json({ success: true });
 	} catch (e: any) {
 		console.error('Delete error:', e);
