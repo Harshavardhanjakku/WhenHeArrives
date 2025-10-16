@@ -4,6 +4,11 @@ import './globals.css';
 export const metadata: Metadata = {
 	title: process.env.NEXT_PUBLIC_SITE_NAME || 'When He Arrives',
 	description: 'Record and view arrival times',
+	icons: {
+		icon: '/mylogo.png',
+		shortcut: '/mylogo.png',
+		apple: '/mylogo.png',
+	},
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

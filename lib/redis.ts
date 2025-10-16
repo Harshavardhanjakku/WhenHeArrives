@@ -18,14 +18,29 @@ export function getRedis(): Redis {
 				port: Number(port),
 				password,
 				tls: { rejectUnauthorized: false },
+				connectTimeout: 10000,
+				lazyConnect: true,
+				maxRetriesPerRequest: 3,
 			});
 		} else if (url) {
 			globalForRedis._redis = new Redis(url, {
 				tls: url.startsWith('rediss://') ? { rejectUnauthorized: false } : undefined,
+				connectTimeout: 10000,
+				lazyConnect: true,
+				maxRetriesPerRequest: 3,
 			});
 		} else {
 			throw new Error('Redis configuration missing');
 		}
+		
+		// Handle connection errors gracefully
+		globalForRedis._redis.on('error', (err) => {
+			console.warn('Redis connection error:', err.message);
+		});
+		
+		globalForRedis._redis.on('connect', () => {
+			console.log('Redis connected successfully');
+		});
 	}
 	return globalForRedis._redis!;
 }

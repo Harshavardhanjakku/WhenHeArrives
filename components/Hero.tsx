@@ -34,7 +34,7 @@ export default function Hero() {
 					transition={{ duration: 0.6, delay: 0.1 }}
 					className="relative rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-xl shadow-2xl"
 				>
-					<Image src="/myimage.png" alt="Family Arrival" width={640} height={480} priority className="w-full h-auto rounded-xl" />
+					<Image src="/mylogo.png" alt="When He Arrives" width={640} height={480} priority className="w-full h-auto rounded-xl" />
 				</motion.div>
 			</div>
 		</section>

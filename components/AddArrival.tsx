@@ -12,16 +12,43 @@ export default function AddArrival() {
 	const [selectedDate, setSelectedDate] = useState<string>('');
 	const [selectedTime, setSelectedTime] = useState<string>('');
 
-	useEffect(() => {
+	function getIstDefaults() {
 		const now = new Date();
-		setSelectedDate(now.toISOString().slice(0, 10));
-		setSelectedTime(now.toTimeString().slice(0, 5));
-		setTimestamp(now.toISOString().slice(0, 16));
+		const date = new Intl.DateTimeFormat('en-CA', {
+			timeZone: 'Asia/Kolkata',
+			year: 'numeric',
+			month: '2-digit',
+			day: '2-digit',
+		}).format(now); // YYYY-MM-DD
+		const time = new Intl.DateTimeFormat('en-GB', {
+			timeZone: 'Asia/Kolkata',
+			hour: '2-digit',
+			minute: '2-digit',
+			hour12: false,
+		}).format(now); // HH:MM
+		return { date, time };
+	}
+
+	function isoFromIst(dateStr: string, timeStr: string) {
+		if (!dateStr || !timeStr) return '';
+		const [y, m, d] = dateStr.split('-').map(Number);
+		const [hh, mm] = timeStr.split(':').map(Number);
+		const utc = new Date(Date.UTC(y, (m || 1) - 1, d || 1, hh || 0, mm || 0, 0, 0));
+		// Convert IST (UTC+5:30) to UTC by subtracting 330 minutes
+		utc.setUTCMinutes(utc.getUTCMinutes() - 330);
+		return utc.toISOString();
+	}
+
+	useEffect(() => {
+		const { date, time } = getIstDefaults();
+		setSelectedDate(date);
+		setSelectedTime(time);
+		setTimestamp(isoFromIst(date, time).slice(0, 16));
 	}, []);
 
 	const combinedTimestamp = useMemo(() => {
 		if (selectedDate && selectedTime) {
-			return new Date(`${selectedDate}T${selectedTime}`).toISOString();
+			return isoFromIst(selectedDate, selectedTime);
 		}
 		return timestamp;
 	}, [selectedDate, selectedTime, timestamp]);
