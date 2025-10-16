@@ -1,4 +1,5 @@
 import { arrivalsCollection } from '@/lib/db';
+import { getArrivalsCached, setArrivalsCached, bumpArrivalsCacheVersion } from '@/lib/cache';
 import { ObjectId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 import type { CreateArrivalRequest, ListArrivalsResponse, ArrivalTimeTag, DayOfWeek } from '@/lib/types';
@@ -37,6 +38,7 @@ export async function POST(req: NextRequest) {
 		const col = arrivalsCollection();
 		const result = await col.insertOne(doc);
 		const inserted = await col.findOne({ _id: result.insertedId });
+		await bumpArrivalsCacheVersion();
 		return NextResponse.json({ success: true, arrival: inserted }, { status: 201 });
 	} catch (e: any) {
 		return NextResponse.json({ success: false, error: e?.message || 'Server error' }, { status: 500 });
@@ -78,10 +80,15 @@ export async function GET(req: NextRequest) {
 		}
 		
 		const limit = Math.min(500, Math.max(1, Number(limitStr) || 200));
+		const cacheKeySuffix = JSON.stringify({ query, limit });
+		const cached = await getArrivalsCached<ListArrivalsResponse>(cacheKeySuffix);
+		if (cached) return NextResponse.json(cached, { status: 200, headers: { 'X-Cache': 'HIT' } });
+		
 		const col = arrivalsCollection();
 		const docs = await col.find(query).sort({ timestamp: -1 }).limit(limit).toArray();
 		const res: ListArrivalsResponse = { success: true, arrivals: docs as any };
-		return NextResponse.json(res, { status: 200 });
+		await setArrivalsCached(cacheKeySuffix, res);
+		return NextResponse.json(res, { status: 200, headers: { 'X-Cache': 'MISS' } });
 	} catch (e: any) {
 		return NextResponse.json({ success: false, error: e?.message || 'Server error' }, { status: 500 });
 	}

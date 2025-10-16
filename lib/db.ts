@@ -1,6 +1,6 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
-const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI as string;
 if (!uri) {
 	throw new Error('MONGODB_URI is not set. Add it to your environment.');
 }

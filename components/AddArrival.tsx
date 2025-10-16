@@ -54,7 +54,7 @@ export default function AddArrival() {
 				className="bg-black/50 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-2xl p-6"
 			>
 				<h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-					<Calendar className="w-5 h-5 text-cyan-400" />
+					<Calendar className="w-5 h-5 text-white/80" />
 					Add Arrival
 				</h2>
 				<form 
@@ -69,15 +69,15 @@ export default function AddArrival() {
 							whileFocus={{ scale: 1.02 }}
 							className="space-y-2"
 						>
-							<label className="text-sm font-medium text-white/80 flex items-center gap-2">
-								<Calendar className="w-4 h-4 text-cyan-400" />
+						<label className="text-sm font-medium text-white/80 flex items-center gap-2">
+							<Calendar className="w-4 h-4 text-white/70" />
 								Date
 							</label>
 							<input 
 								type="date" 
 								value={selectedDate} 
 								onChange={(e) => setSelectedDate(e.target.value)} 
-								className="w-full h-12 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 px-4 transition-all duration-300" 
+							className="w-full h-12 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 px-4 transition-all duration-300" 
 								required 
 							/>
 						</motion.div>
@@ -85,15 +85,15 @@ export default function AddArrival() {
 							whileFocus={{ scale: 1.02 }}
 							className="space-y-2"
 						>
-							<label className="text-sm font-medium text-white/80 flex items-center gap-2">
-								<Clock className="w-4 h-4 text-purple-400" />
+						<label className="text-sm font-medium text-white/80 flex items-center gap-2">
+							<Clock className="w-4 h-4 text-white/70" />
 								Time
 							</label>
 							<input 
 								type="time" 
 								value={selectedTime} 
 								onChange={(e) => setSelectedTime(e.target.value)} 
-								className="w-full h-12 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-400/50 focus:border-purple-400/50 px-4 transition-all duration-300" 
+							className="w-full h-12 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 px-4 transition-all duration-300" 
 								required 
 							/>
 						</motion.div>
@@ -106,7 +106,7 @@ export default function AddArrival() {
 						<input 
 							value={note} 
 							onChange={(e) => setNote(e.target.value)} 
-							className="w-full h-12 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50 px-4 transition-all duration-300" 
+						className="w-full h-12 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 px-4 transition-all duration-300" 
 							placeholder="E.g., came with groceries" 
 						/>
 					</motion.div>
@@ -114,7 +114,7 @@ export default function AddArrival() {
 						whileHover={{ scale: 1.02, y: -2 }}
 						whileTap={{ scale: 0.98 }}
 						disabled={loading} 
-						className="w-full h-12 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl font-semibold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+					className="w-full h-12 bg-white/10 hover:bg-white/15 text-white rounded-xl font-semibold border border-white/10 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
 					>
 						<Save className="w-4 h-4" /> 
 						{loading ? 'Saving...' : 'Save Arrival'}
@@ -127,7 +127,7 @@ export default function AddArrival() {
 				whileTap={{ scale: 0.9 }}
 				aria-label="Fast add arrival now" 
 				onClick={() => create({})} 
-				className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 flex items-center justify-center"
+			className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-white/10 hover:bg-white/15 text-white border border-white/10 shadow-2xl shadow-black/40 transition-all duration-300 flex items-center justify-center"
 			>
 				<Plus className="w-6 h-6" />
 			</motion.button>

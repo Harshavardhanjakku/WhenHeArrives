@@ -1,6 +1,61 @@
 node_modules
 .env.local
+.env.development
+.env.test
+.env.production
 .env
+.env.*.local
 .env.example
-next
 .next
+out
+build
+dist
+coverage
+
+# Next.js cache
+.next/cache
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+debug.log*
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jest
+/jest-cache/
+/jest-results/
+
+# Turborepo/Task runners
+.turbo
+
+# Storybook
+storybook-static
+
+# Images cache/artifacts
+*.orig
+
+# Local databases
+*.sqlite
+*.db
+
+# Misc
+/.vercel
+/.envrc
+/.cursor
+/.agent-tools
+/.cache
+tmp
+temp

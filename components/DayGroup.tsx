@@ -48,7 +48,7 @@ export default function DayGroup({ dateLabel, items, onDeleted }: { dateLabel: s
 	return (
 		<section className="space-y-3">
 			<h3 className="text-lg font-bold text-white mt-6 flex items-center gap-2">
-				<div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full animate-pulse"></div>
+				<div className="w-2 h-2 bg-white/70 rounded-full animate-pulse"></div>
 				{dateLabel}
 			</h3>
 			<ul className="space-y-3">
@@ -61,27 +61,27 @@ export default function DayGroup({ dateLabel, items, onDeleted }: { dateLabel: s
 										type="datetime-local"
 										value={editData.timestamp}
 										onChange={(e) => setEditData(prev => ({ ...prev, timestamp: e.target.value }))}
-										className="rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/20"
+									className="rounded-xl bg-white/10 border border-white/15 text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/30"
 									/>
 									<input
 										type="text"
 										value={editData.note}
 										onChange={(e) => setEditData(prev => ({ ...prev, note: e.target.value }))}
 										placeholder="Note (optional)"
-										className="rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/20"
+									className="rounded-xl bg-white/10 border border-white/15 text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/30"
 									/>
 								</div>
 								<div className="flex gap-2">
 									<button
 										onClick={() => update(String(a._id))}
-										className="inline-flex items-center gap-1 px-3 py-1 bg-green-600 text-white rounded text-sm hover:bg-green-700 transition-colors"
+									className="inline-flex items-center gap-1 px-3 py-1 bg-green-600/90 hover:bg-green-600 text-white rounded-xl text-sm transition-colors"
 									>
 										<Save className="w-3 h-3" />
 										Save
 									</button>
 									<button
 										onClick={cancelEdit}
-										className="inline-flex items-center gap-1 px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600 transition-colors"
+									className="inline-flex items-center gap-1 px-3 py-1 bg-white/10 hover:bg-white/15 border border-white/10 text-white rounded-xl text-sm transition-colors"
 									>
 										<X className="w-3 h-3" />
 										Cancel
@@ -91,20 +91,20 @@ export default function DayGroup({ dateLabel, items, onDeleted }: { dateLabel: s
 						) : (
 							<>
 								<div className="flex-1">
-									<div className="font-medium">{formatDate(new Date(a.timestamp))}</div>
+									<div className="font-medium text-white/90">{formatDate(new Date(a.timestamp))}</div>
 									{(a as any).dayOfWeek && (
-										<div className="text-xs text-gray-500 mt-1">
+										<div className="text-xs text-white/60 mt-1">
 											<span className="font-medium">{(a as any).dayOfWeek}</span>
 										</div>
 									)}
-									{(a as any).note ? <div className="text-sm text-gray-600">{(a as any).note}</div> : null}
+									{(a as any).note ? <div className="text-sm text-white/70">{(a as any).note}</div> : null}
 									{(a as any).timeTag && (
 										<div className="text-xs mt-1">
-											<span className={`px-2 py-1 rounded-full text-xs font-medium ${
-												(a as any).timeTag === 'fast' ? 'bg-green-100 text-green-700' :
-												(a as any).timeTag === 'late' ? 'bg-yellow-100 text-yellow-700' :
-												'bg-red-100 text-red-700'
-											}`}>
+											<span className={`px-2 py-1 rounded-full text-xs font-medium border ${
+												(a as any).timeTag === 'fast' ? 'bg-green-500/10 text-green-300 border-green-400/20' :
+												(a as any).timeTag === 'late' ? 'bg-yellow-500/10 text-yellow-300 border-yellow-400/20' :
+												'bg-red-500/10 text-red-300 border-red-400/20'
+											}`}> 
 												{(a as any).timeTag === 'fast' ? 'Fast' :
 												 (a as any).timeTag === 'late' ? 'Late' : 'Very Late'}
 											</span>
@@ -115,14 +115,14 @@ export default function DayGroup({ dateLabel, items, onDeleted }: { dateLabel: s
 									<button 
 										aria-label="Edit" 
 										onClick={() => startEdit(a)} 
-										className="text-blue-600 hover:text-blue-700 p-1.5 rounded hover:bg-blue-50 transition-colors"
+									className="text-white/80 hover:text-white p-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
 									>
 										<Edit2 className="w-4 h-4" />
 									</button>
 									<button 
 										aria-label="Delete" 
 										onClick={() => remove(String(a._id))} 
-										className="text-red-600 hover:text-red-700 p-1.5 rounded hover:bg-red-50 transition-colors"
+									className="text-white/80 hover:text-white p-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
 									>
 										<Trash2 className="w-4 h-4" />
 									</button>
